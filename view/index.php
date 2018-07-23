@@ -9,6 +9,29 @@ if(isset($_SESSION['time']) && time()- $_SESSION['time']>900){
 }else{
 	$_SESSION['time'] = time();
 }
+$categories=isset($categories)?$categories:array();
+//var_dump($categories);
+
+$noviNiz = array();
+
+foreach($categories as $key => $item)
+{
+   $noviNiz[$item['category_name']][$key]['id_sub_category']=$item['id_sub_category'];
+   $noviNiz[$item['category_name']][$key]['subcategory_name']=$item['subcategory_name'];
+   /*
+   $noviNiz[$item['idporudzbine']][$key]['kolicina']=$item['kolicina'];
+   $noviNiz[$item['idporudzbine']][$key]['ukupno']=$item['ukupno'];
+   $noviNiz[$item['idporudzbine']][$key]['vreme']=$item['vreme'];
+   $noviNiz[$item['idporudzbine']][$key]['status']=$item['status'];
+   $noviNiz[$item['idporudzbine']][$key]['ime']=$item['ime'];
+   $noviNiz[$item['idporudzbine']][$key]['adresa']=$item['adresa'];
+   $noviNiz[$item['idporudzbine']][$key]['telefon']=$item['telefon'];
+   */
+}
+
+krsort($noviNiz, SORT_NUMERIC);
+echo"<br><br><br>";
+//var_dump($noviNiz);
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,9 +77,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="header-grid">
 				<div class="header-grid-left animated wow slideInLeft" data-wow-delay=".5s">
 					<ul>
-						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="">@example.com</a></li>
+						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:info@example.com">@example.com</a></li>
 						<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>+1234 567 892</li>
-						<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="routes.php?page=showrlogin">Login</a></li>
+						<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="routes.php?page=showlogin">Login</a></li>
 						<li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a href="routes.php?page=showregister">Register</a></li>
 					</ul>
 				</div>
@@ -72,7 +95,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<div class="logo-nav">
 				<div class="logo-nav-left animated wow zoomIn" data-wow-delay=".5s">
-					<h1><a href="routes.php?page=index">Best Store <span>Shop anywhere</span></a></h1>
+					<h1><a href="routes.php?page=index">Best Store<span>Shop anywhere</span></a></h1>
 				</div>
 				<div class="logo-nav-left1">
 					<nav class="navbar navbar-default">
@@ -87,87 +110,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="index.html" class="act">Home</a></li>
+							<li class="active"><a href="#" class="act">Home</a></li>
 							<!-- Mega Menu -->
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
-								<ul class="dropdown-menu multi-column columns-3">
-									<div class="row">
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Men's Wear</h6>
-												<li><a href="products.html">Clothing</a></li>
-												<li><a href="products.html">Wallets</a></li>
-												<li><a href="products.html">Shoes</a></li>
-												<li><a href="products.html">Watches</a></li>
-												<li><a href="products.html">Accessories</a></li>
+								<ul class="dropdown-menu multi-column columns-2 text-center">
+									<div class="row text-center" style="margin-left:60px;width:180px;">
+										<div class="col-md-4 text-center">
+											<ul class="multi-column-dropdown" align="center">
+                        <?php foreach ($noviNiz as $key=>$value) {
+
+                           ?>
+                           <h6><?php echo $key; ?></h6>
+                          <?php
+                             foreach ($value as  $one) {
+                          ?>
+                          <li><a href="routes.php?page=showProducts&id_sub_category=<?php echo $one['id_sub_category']; ?>"><?php echo $one['subcategory_name']; ?></a></li>
+                       <?php }
+                          }
+                       ?>
+
 											</ul>
 										</div>
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Women's Wear</h6>
-												<li><a href="products.html">Clothing</a></li>
-												<li><a href="products.html">Wallets,Bags</a></li>
-												<li><a href="products.html">Footwear</a></li>
-												<li><a href="products.html">Watches</a></li>
-												<li><a href="products.html">Accessories</a></li>
-												<li><a href="products.html">Jewellery</a></li>
-												<li><a href="products.html">Beauty & Grooming</a></li>
-											</ul>
-										</div>
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Kid's Wear</h6>
-												<li><a href="products.html">Kids Home Fashion</a></li>
-												<li><a href="products.html">Boy's Clothing</a></li>
-												<li><a href="products.html">Girl's Clothing</a></li>
-												<li><a href="products.html">Shoes</a></li>
-												<li><a href="products.html">Brand Stores</a></li>
-											</ul>
-										</div>
+
 										<div class="clearfix"></div>
 									</div>
 								</ul>
 							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Furniture <b class="caret"></b></a>
-								<ul class="dropdown-menu multi-column columns-3">
-									<div class="row">
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Home Collection</h6>
-												<li><a href="furniture.html">Cookware</a></li>
-												<li><a href="furniture.html">Sofas</a></li>
-												<li><a href="furniture.html">Dining Tables</a></li>
-												<li><a href="furniture.html">Shoe Racks</a></li>
-												<li><a href="furniture.html">Home Decor</a></li>
-											</ul>
-										</div>
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Office Collection</h6>
-												<li><a href="furniture.html">Carpets</a></li>
-												<li><a href="furniture.html">Tables</a></li>
-												<li><a href="furniture.html">Sofas</a></li>
-												<li><a href="furniture.html">Shoe Racks</a></li>
-												<li><a href="furniture.html">Sockets</a></li>
-												<li><a href="furniture.html">Electrical Machines</a></li>
-											</ul>
-										</div>
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Decorations</h6>
-												<li><a href="furniture.html">Toys</a></li>
-												<li><a href="furniture.html">Wall Clock</a></li>
-												<li><a href="furniture.html">Lighting</a></li>
-												<li><a href="furniture.html">Top Brands</a></li>
-											</ul>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-								</ul>
-							</li>
-							<li><a href="short-codes.html">Short Codes</a></li>
+
+
 							<li><a href="mail.html">Mail Us</a></li>
 						</ul>
 					</div>

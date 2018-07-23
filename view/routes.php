@@ -7,7 +7,7 @@ if(isset($_SESSION['time']) && time()- $_SESSION['time']>900){
 	session_destroy();
 	$msg="Your session expired due to inactivity";
 }else{
-	$_SESSION['time'] = time(); 
+	$_SESSION['time'] = time();
 }
 
 
@@ -23,11 +23,11 @@ $page=($pageGet!='index')?$pageGet:$pagePost;
 
 
 switch ($page){
-	
+
 	case 'index':
 		$controller->index();
 	break;
-	
+
 	case 'showregister':
 		$controller->showRegister();
 	break;
@@ -43,11 +43,13 @@ switch ($page){
 	case 'login':
 		$controller->login();
 	break;
+  case 'showProducts':
+		$controller->showProducts();
+	break;
 
 	/*case '_____':
 		$controller->____();
-	break;*/	
+	break;*/
 
 
 }
-
