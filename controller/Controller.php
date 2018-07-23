@@ -143,7 +143,7 @@ class Controller{
 			}
 			$_SESSION['user']=serialize($user);
 				$dao=new DAO();
-			 $categories=$dao->getCategoriesAndSubcategories();
+			  $categories=$dao->getCategoriesAndSubcategories();
 			 //var_dump($categories);
           	include 'index.php';
         }else{
@@ -166,6 +166,7 @@ class Controller{
 		 //var_dump($subId);
 		 $dao=new DAO();
 		 $productsBySubId=$dao->getProductsBySubcategoryId($subId);
+		 $categories=$dao->getCategoriesAndSubcategories();
 		 include 'products.php';
 	}
 

@@ -10,7 +10,21 @@ if(isset($_SESSION['time']) && time()- $_SESSION['time']>900){
 	$_SESSION['time'] = time();
 }
 $productsBySubId=isset($productsBySubId)?$productsBySubId:array();
-//var_dump($productsBySubId);
+$categories=isset($categories)?$categories:array();
+//var_dump($categories);
+
+$noviNiz = array();
+
+foreach($categories as $key => $item)
+{
+   $noviNiz[$item['category_name']][$key]['id_sub_category']=$item['id_sub_category'];
+   $noviNiz[$item['category_name']][$key]['subcategory_name']=$item['subcategory_name'];
+
+}
+
+krsort($noviNiz, SORT_NUMERIC);
+
+//var_dump($noviNiz);
 ?>
 <!DOCTYPE html>
 <html>
@@ -250,23 +264,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h3>Categories</h3>
 					<ul class="cate">
 						<li><a href="products.html">Best Selling</a> <span>(15)</span></li>
-						<li><a href="products.html">Man</a> <span>(16)</span></li>
+            <li><a href="products.html">Sales</a> <span>(15)</span></li>
+            <?php foreach ($noviNiz as $key => $value) {
+            ?>
+						<li><a href="products.html"><?php echo $key;?></a> <span>(16)</span></li>
+              <?php  foreach ($value as $jedna) {
+              ?>
 							<ul>
-								<li><a href="products.html">Accessories</a> <span>(2)</span></li>
-								<li><a href="products.html">Coats & Jackets</a> <span>(5)</span></li>
-								<li><a href="products.html">Jeans</a> <span>(1)</span></li>
-								<li><a href="products.html">New Arrivals</a> <span>(0)</span></li>
-								<li><a href="products.html">Suits</a> <span>(1)</span></li>
-								<li><a href="products.html">Casual Shirts</a> <span>(0)</span></li>
+								<li><a href="products.html"><?php echo $jedna['subcategory_name']; ?></a> <span>(2)</span></li>
 							</ul>
-						<li><a href="products.html">Sales</a> <span>(15)</span></li>
-						<li><a href="products.html">Woman</a> <span>(15)</span></li>
-							<ul>
-								<li><a href="products.html">Accessories</a> <span>(2)</span></li>
-								<li><a href="products.html">New Arrivals</a> <span>(0)</span></li>
-								<li><a href="products.html">Dresses</a> <span>(1)</span></li>
-								<li><a href="products.html">Casual Shirts</a> <span>(0)</span></li>
-								<li><a href="products.html">Shorts</a> <span>(4)</span></li>
+          <?php
+            }
+           } ?>
+
 							</ul>
 					</ul>
 				</div>
@@ -411,7 +421,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-4 products-right-grids-bottom-grid">
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
 							<div class="new-collections-grid1-image">
-								<a href="single.html" class="product-image"><img src="<?php echo $value['product_img'];?>" alt=" " class="img-responsive"></a>
+								<a href="single.html" class="product-image"><img src="<?php echo $value['product_img']; ?>" alt=" " class="img-responsive"></a>
 								<div class="new-collections-grid1-image-pos products-right-grids-pos">
 									<a href="single.html">Quick View</a>
 								</div>
@@ -509,7 +519,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</div>
-        <?php } ?>
+         <?php
+         }?>
          <!--
 					<div class="col-md-4 products-right-grids-bottom-grid">
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
