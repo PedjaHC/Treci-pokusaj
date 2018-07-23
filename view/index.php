@@ -18,15 +18,7 @@ foreach($categories as $key => $item)
 {
    $noviNiz[$item['category_name']][$key]['id_sub_category']=$item['id_sub_category'];
    $noviNiz[$item['category_name']][$key]['subcategory_name']=$item['subcategory_name'];
-   /*
-   $noviNiz[$item['idporudzbine']][$key]['kolicina']=$item['kolicina'];
-   $noviNiz[$item['idporudzbine']][$key]['ukupno']=$item['ukupno'];
-   $noviNiz[$item['idporudzbine']][$key]['vreme']=$item['vreme'];
-   $noviNiz[$item['idporudzbine']][$key]['status']=$item['status'];
-   $noviNiz[$item['idporudzbine']][$key]['ime']=$item['ime'];
-   $noviNiz[$item['idporudzbine']][$key]['adresa']=$item['adresa'];
-   $noviNiz[$item['idporudzbine']][$key]['telefon']=$item['telefon'];
-   */
+   
 }
 
 krsort($noviNiz, SORT_NUMERIC);
