@@ -11,50 +11,53 @@ function test_input($data){
 
 class Controller{
 
-	
+
 	public function index(){
+		$dao=new DAO();
+		$categories=$dao->getCategoriesAndSubcategories();
+		var_dump($categories);
 		include 'index.php';
 	}
 
-	
+
 	public function showRegister(){
 		include 'register.php';
 	}
 
-			
+
     public function register(){
-    	
+
         $first_name=isset($_POST['first_name'])?$_POST['first_name']:"";
     	$last_name=isset($_POST['last_name'])?$_POST['last_name']:"";
     	$email=isset($_POST['email'])?$_POST['email']:"";
     	$password=isset($_POST['password'])?$_POST['password']:"";
-    	$cpassword=isset($_POST['cpassword'])?$_POST['cpassword']:"";    	
-    	
+    	$cpassword=isset($_POST['cpassword'])?$_POST['cpassword']:"";
+
     	$errors= array();
-        
-        if(empty($first_name)){        
+
+        if(empty($first_name)){
             $errors['first_name']='First name is required';
     	}else{
         	$first_name = test_input($first_name);
         	if (!preg_match("/^[a-zA-Z ]*$/",$first_name)){
-            	$errors['first_name'] = 'Use letters and spacing only'; 
+            	$errors['first_name'] = 'Use letters and spacing only';
         	}
-    	}    
-        
-        if(empty($last_name)){        
+    	}
+
+        if(empty($last_name)){
              $errors['last_name']='Last name is required.';
         }else{
         	$last_name = test_input($last_name);
         	if (!preg_match("/^[a-zA-Z ]*$/",$last_name)){
-            	$errors['last_name'] = 'Use letters and spacing only'; 
+            	$errors['last_name'] = 'Use letters and spacing only';
         	}
-    	}       
-             
-        if(empty($email)){       
-             $errors['email']='Email is required';            
+    	}
+
+        if(empty($email)){
+             $errors['email']='Email is required';
         }else{
 			$email = test_input($email);
-           if (filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+           if (filter_var($email, FILTER_VALIDATE_EMAIL)){
            		$dao=new DAO();
     			$user=$dao->getUser($email);
     			if($user){
@@ -63,16 +66,16 @@ class Controller{
     			}
            }else{
                  $errors['email']="Incorrect email adress";
-           }       	      	
+           }
         }
-         
-        if(empty($password)){        
-            $errors['password']='Password is required';                       
+
+        if(empty($password)){
+            $errors['password']='Password is required';
         }else{
-         	$password = test_input($password);	
+         	$password = test_input($password);
          	$cpassword = test_input($cpassword);
-         	if ($password!==$cpassword){ 
-            	$errors['password'] = "Passwords do not match";        	          
+         	if ($password!==$cpassword){
+            	$errors['password'] = "Passwords do not match";
             }
             elseif (strlen($password) <= '8') {
             	$errors['password'] = "Password must contain at least 8 characters!";
@@ -87,19 +90,19 @@ class Controller{
             	$errors['password'] = "Use at least one lowercase letter!";
         	}
         }
-            
-    		if(count($errors)==0){                
+
+    		if(count($errors)==0){
                 $dao=new DAO();
                 $dao->insertUser($first_name, $last_name, $email, $password);
                 $msg='Successful registration';
-                include 'login.php';                    
-            }else{            	
-            	$msg='Not registred'; 
-            	include 'register.php';                 
-            }    	    	
+                include 'login.php';
+            }else{
+            	$msg='Not registred';
+            	include 'register.php';
+            }
     }
 
-	
+
 	public function showLogin(){
 		include 'login.php';
 	}
@@ -110,15 +113,15 @@ class Controller{
 		$email=isset($_POST['email'])?$_POST['email']:"";
     	$password=isset($_POST['password'])?$_POST['password']:"";
         $user=isset($user)?$user:"";
-		
-        if(!isset($email)){       
+        $errors=array();
+        if(!isset($email)){
              $errors['email']='Email is required';
         }else{
 			$email = test_input($email);
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)){
            		$dao=new DAO();
     			$user=$dao->getUser($email);
-    			if($user){   				
+    			if($user){
     			}else{
     				$errors['email']='Incorrect email adress, please register';
                     include 'login.php';
@@ -126,43 +129,45 @@ class Controller{
             }else{
                  $errors['email']="Incorrect email adress format";
                  include 'login.php';
-            }       	      	
+            }
         }
-    			 				
-    	if($password===$user['password']){    					
+
+    	if($password===$user['password']){
     	}else{
-    		$errors['password']='Wrong password';				
+    		$errors['password']='Wrong password';
     	}
 
-    	if(count($errors)==0){                
+    	if(count($errors)==0){
  			if (!isset($_SESSION)) {
-				session_start(); 
-			}	              				
-			$_SESSION['user']=serialize($user);			
-          	include 'index.php';                    
+				session_start();
+			}
+			$_SESSION['user']=serialize($user);
+				$dao=new DAO();
+			 $categories=$dao->getCategoriesAndSubcategories();
+			 //var_dump($categories);
+          	include 'index.php';
         }else{
-            $msg='You are not logedin'; 
-            include 'login.php';                 
-        }    				
-    }  
-    	
-	
+            $msg='You are not logedin';
+            include 'login.php';
+        }
+    }
+
+
 	public function logout(){
 		if (!isset($_SESSION)){
-			session_start(); 
-		}		
+			session_start();
+		}
 		session_unset();
 		session_destroy();
-		include 'login.php';	
+		include 'login.php';
+	}
+  public function showProducts(){
+		 $subId=isset($_GET['id_sub_category'])?$_GET['id_sub_category']:"";
+		 //var_dump($subId);
+		 $dao=new DAO();
+		 $productsBySubId=$dao->getProductsBySubcategoryId($subId);
+		 include 'products.php';
 	}
 
 
-
 }
-
-				
-				
-				
-							
-			
-  
