@@ -7,8 +7,24 @@ if(isset($_SESSION['time']) && time()- $_SESSION['time']>900){
 	session_destroy();
 	$msg="Your session expired due to inactivity";
 }else{
-	$_SESSION['time'] = time(); 
+	$_SESSION['time'] = time();
 }
+$productsBySubId=isset($productsBySubId)?$productsBySubId:array();
+$categories=isset($categories)?$categories:array();
+//var_dump($categories);
+
+$noviNiz = array();
+
+foreach($categories as $key => $item)
+{
+   $noviNiz[$item['category_name']][$key]['id_sub_category']=$item['id_sub_category'];
+   $noviNiz[$item['category_name']][$key]['subcategory_name']=$item['subcategory_name'];
+
+}
+
+krsort($noviNiz, SORT_NUMERIC);
+
+//var_dump($noviNiz);
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,7 +33,7 @@ if(isset($_SESSION['time']) && time()- $_SESSION['time']>900){
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Best Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+<meta name="keywords" content="Best Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -37,14 +53,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <!-- animation-effect -->
-<link href="css/animate.min.css" rel="stylesheet"> 
+<link href="css/animate.min.css" rel="stylesheet">
 <script src="js/wow.min.js"></script>
 <script>
  new WOW().init();
 </script>
 <!-- //animation-effect -->
 </head>
-	
+
 <body>
 <!-- header -->
 	<div class="header">
@@ -85,7 +101,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav">
-							<li><a href="index.html">Home</a></li>	
+							<li><a href="index.html">Home</a></li>
 							<!-- Mega Menu -->
 							 <li class="dropdown active">
 								<a href="#" class="dropdown-toggle act" data-toggle="dropdown">Products <b class="caret"></b></a>
@@ -199,7 +215,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</a>
 						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
 						<div class="clearfix"> </div>
-					</div>	
+					</div>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -221,12 +237,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="filter-price animated wow slideInUp" data-wow-delay=".5s">
 					<h3>Filter By Price</h3>
 					<ul class="dropdown-menu1">
-							<li><a href="">								               
-							<div id="slider-range"></div>							
+							<li><a href="">
+							<div id="slider-range"></div>
 							<input type="text" id="amount" style="border: 0" />
-							</a></li>	
+							</a></li>
 					</ul>
-						<script type='text/javascript'>//<![CDATA[ 
+						<script type='text/javascript'>//<![CDATA[
 						$(window).load(function(){
 						 $( "#slider-range" ).slider({
 								range: true,
@@ -248,23 +264,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h3>Categories</h3>
 					<ul class="cate">
 						<li><a href="products.html">Best Selling</a> <span>(15)</span></li>
-						<li><a href="products.html">Man</a> <span>(16)</span></li>
+            <li><a href="products.html">Sales</a> <span>(15)</span></li>
+            <?php foreach ($noviNiz as $key => $value) {
+            ?>
+						<li><a href="products.html"><?php echo $key;?></a> <span>(16)</span></li>
+              <?php  foreach ($value as $jedna) {
+              ?>
 							<ul>
-								<li><a href="products.html">Accessories</a> <span>(2)</span></li>
-								<li><a href="products.html">Coats & Jackets</a> <span>(5)</span></li>
-								<li><a href="products.html">Jeans</a> <span>(1)</span></li>
-								<li><a href="products.html">New Arrivals</a> <span>(0)</span></li>
-								<li><a href="products.html">Suits</a> <span>(1)</span></li>
-								<li><a href="products.html">Casual Shirts</a> <span>(0)</span></li>
+								<li><a href="products.html"><?php echo $jedna['subcategory_name']; ?></a> <span>(2)</span></li>
 							</ul>
-						<li><a href="products.html">Sales</a> <span>(15)</span></li>
-						<li><a href="products.html">Woman</a> <span>(15)</span></li>
-							<ul>
-								<li><a href="products.html">Accessories</a> <span>(2)</span></li>
-								<li><a href="products.html">New Arrivals</a> <span>(0)</span></li>
-								<li><a href="products.html">Dresses</a> <span>(1)</span></li>
-								<li><a href="products.html">Casual Shirts</a> <span>(0)</span></li>
-								<li><a href="products.html">Shorts</a> <span>(4)</span></li>
+          <?php
+            }
+           } ?>
+
 							</ul>
 					</ul>
 				</div>
@@ -377,17 +389,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="sorting">
 							<select id="country" onchange="change_country(this.value)" class="frm-field required sect">
 								<option value="null">Default sorting</option>
-								<option value="null">Sort by popularity</option> 
-								<option value="null">Sort by average rating</option>					
-								<option value="null">Sort by price</option>								
+								<option value="null">Sort by popularity</option>
+								<option value="null">Sort by average rating</option>
+								<option value="null">Sort by price</option>
 							</select>
 						</div>
 						<div class="sorting-left">
 							<select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
 								<option value="null">Item on page 9</option>
-								<option value="null">Item on page 18</option> 
-								<option value="null">Item on page 32</option>					
-								<option value="null">All</option>								
+								<option value="null">Item on page 18</option>
+								<option value="null">Item on page 32</option>
+								<option value="null">All</option>
 							</select>
 						</div>
 						<div class="clearfix"> </div>
@@ -396,17 +408,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<img src="images/18.jpg" alt=" " class="img-responsive" />
 						<div class="products-right-grids-position1">
 							<h4>2016 New Collection</h4>
-							<p>Temporibus autem quibusdam et aut officiis debitis aut rerum 
-								necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae 
+							<p>Temporibus autem quibusdam et aut officiis debitis aut rerum
+								necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae
 								non recusandae.</p>
 						</div>
 					</div>
 				</div>
 				<div class="products-right-grids-bottom">
+          <?php foreach ($productsBySubId as $value) {
+          ?>
+
 					<div class="col-md-4 products-right-grids-bottom-grid">
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
 							<div class="new-collections-grid1-image">
-								<a href="single.html" class="product-image"><img src="images/19.jpg" alt=" " class="img-responsive"></a>
+								<a href="single.html" class="product-image"><img src="<?php echo $value['product_img']; ?>" alt=" " class="img-responsive"></a>
 								<div class="new-collections-grid1-image-pos products-right-grids-pos">
 									<a href="single.html">Quick View</a>
 								</div>
@@ -504,6 +519,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</div>
+         <?php
+         }?>
+         <!--
 					<div class="col-md-4 products-right-grids-bottom-grid">
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
 							<div class="new-collections-grid1-image">
@@ -705,6 +723,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<p><i>$585</i> <span class="item_price">$489</span><a class="item_add" href="#">add to cart </a></p>
 							</div>
 						</div>
+          -->
 					</div>
 					<div class="clearfix"> </div>
 				</div>
@@ -738,7 +757,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="footer-grids">
 				<div class="col-md-3 footer-grid animated wow slideInLeft" data-wow-delay=".5s">
 					<h3>About Us</h3>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse.<span>Excepteur sint occaecat cupidatat 
+					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse.<span>Excepteur sint occaecat cupidatat
 						non proident, sunt in culpa qui officia deserunt mollit.</span></p>
 				</div>
 				<div class="col-md-3 footer-grid animated wow slideInLeft" data-wow-delay=".6s">
