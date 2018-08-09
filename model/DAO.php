@@ -13,7 +13,7 @@ class DAO{
 	private $GET_USER_BY_EMAIL ="SELECT * FROM users WHERE email=?";
 	private $GET_CATEGORIES_AND_SUBCATEGORIES="SELECT category.*,subcategory.* FROM category JOIN subcategory ON subcategory.category_id=category.id";
   private $GET_PRODUCTS_BY_SUBCATEGORY_ID="SELECT * FROM `products` WHERE subcategory_id=?";
-
+  private $GET_NEW_PRODUCTS="SELECT * FROM `products` ORDER BY id_product DESC LIMIT 3";
 
 
 	/*private $SELECT_DELIVERY_BY_ID_DIL="SELECT deliverys.*,auxiliary.*,products.* FROM deliverys JOIN auxiliary ON deliverys.id_del=auxiliary.id_del JOIN products ON auxiliary.id_product=products.id_product WHERE deliverys.id_del=?";*/
@@ -27,6 +27,16 @@ class DAO{
 
 		$this->db =DB::createInstance();
 
+	}
+
+
+	public function getNewProducts(){
+		$statement =$this->db->prepare($this->GET_NEW_PRODUCTS);
+
+		$statement->execute();
+
+		$result=$statement->fetchAll();
+		return $result;
 	}
 
 	public function getCategoriesAndSubcategories(){

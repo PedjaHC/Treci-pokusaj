@@ -167,6 +167,7 @@ class Controller{
 		 $dao=new DAO();
 		 $productsBySubId=$dao->getProductsBySubcategoryId($subId);
 		 $categories=$dao->getCategoriesAndSubcategories();
+		 $newProducts=$dao->getNewProducts();
 		 include 'products.php';
 	}
 

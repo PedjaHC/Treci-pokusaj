@@ -10,8 +10,11 @@ if(isset($_SESSION['time']) && time()- $_SESSION['time']>900){
 	$_SESSION['time'] = time();
 }
 $productsBySubId=isset($productsBySubId)?$productsBySubId:array();
+//var_dump($productsBySubId);
 $categories=isset($categories)?$categories:array();
 //var_dump($categories);
+$newProducts=isset($newProducts)?$newProducts:array();
+//var_dump($newProducts);
 
 $noviNiz = array();
 
@@ -282,13 +285,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="new-products animated wow slideInUp" data-wow-delay=".5s">
 					<h3>New Products</h3>
+
+
 					<div class="new-products-grids">
 						<div class="new-products-grid">
+              <?php foreach ($newProducts as $new) {
+              ?>
 							<div class="new-products-grid-left">
-								<a href="single.html"><img src="images/6.jpg" alt=" " class="img-responsive" /></a>
+								<a href="single.html"><img src="<?php echo $new['product_img'];?>" alt=" " class="img-responsive" /></a>
 							</div>
+              <br>
 							<div class="new-products-grid-right">
-								<h4><a href="single.html">occaecat cupidatat</a></h4>
+								<h4><a href="single.html"><?php echo $new['product_name'];?></a></h4>
 								<div class="rating">
 									<div class="rating-left">
 										<img src="images/2.png" alt=" " class="img-responsive">
@@ -308,11 +316,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div class="clearfix"> </div>
 								</div>
 								<div class="simpleCart_shelfItem new-products-grid-right-add-cart">
-									<p> <span class="item_price">$180</span><a class="item_add" href="#">add to cart </a></p>
+									<p> <span class="item_price">300</span><a class="item_add" href="routes.php?page=showregister">add to cart </a></p>
 								</div>
+                <br>
 							</div>
 							<div class="clearfix"> </div>
+            <?php }?>
 						</div>
+
+           <!--
 						<div class="new-products-grid">
 							<div class="new-products-grid-left">
 								<a href="single.html"><img src="images/26.jpg" alt=" " class="img-responsive" /></a>
@@ -370,9 +382,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="simpleCart_shelfItem new-products-grid-right-add-cart">
 									<p> <span class="item_price">$259</span><a class="item_add" href="#">add to cart </a></p>
 								</div>
+
 							</div>
+
 							<div class="clearfix"> </div>
 						</div>
+             -->
 					</div>
 				</div>
 				<div class="men-position animated wow slideInUp" data-wow-delay=".5s">
@@ -417,11 +432,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="products-right-grids-bottom">
           <?php foreach ($productsBySubId as $value) {
           ?>
-
 					<div class="col-md-4 products-right-grids-bottom-grid">
+
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
+
 							<div class="new-collections-grid1-image">
-								<a href="single.html" class="product-image"><img src="<?php echo $value['product_img']; ?>" alt=" " class="img-responsive"></a>
+								<a href="single.html" class="product-image"><img src="<?php echo $value['product_img'];?>" alt=" " class="img-responsive"></a>
 								<div class="new-collections-grid1-image-pos products-right-grids-pos">
 									<a href="single.html">Quick View</a>
 								</div>
@@ -452,6 +468,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<p><i>$325</i> <span class="item_price">$250</span><a class="item_add" href="#">add to cart </a></p>
 							</div>
 						</div>
+
+
+          <!--
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
 							<div class="new-collections-grid1-image">
 								<a href="single.html" class="product-image"><img src="images/21.jpg" alt=" " class="img-responsive"></a>
@@ -519,9 +538,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</div>
-         <?php
-         }?>
-         <!--
+
+
 					<div class="col-md-4 products-right-grids-bottom-grid">
 						<div class="new-collections-grid1 products-right-grid1 animated wow slideInUp" data-wow-delay=".5s">
 							<div class="new-collections-grid1-image">
@@ -725,8 +743,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
           -->
 					</div>
-					<div class="clearfix"> </div>
+          <?php } ?>
+
 				</div>
+        <div class="clearfix"> </div>
 				<nav class="numbering animated wow slideInRight" data-wow-delay=".5s">
 				  <ul class="pagination paging">
 					<li>
